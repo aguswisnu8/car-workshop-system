@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('repair_status',['pending','progress', 'feedback','done'])->default('pending');
             $table->timestamp('car_in');
             $table->bigInteger('car_id');
+            $table->bigInteger('user_id');
             $table->timestamps();
 
         });

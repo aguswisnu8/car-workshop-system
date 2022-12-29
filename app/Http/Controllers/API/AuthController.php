@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class AuthController extends Controller
         $user = Auth::user();
         return response()->json([
                 'status' => 'success',
-                'user' => $user,
+                'data' => $user,
                 'authorisation' => [
                     'token' => $token,
                     'type' => 'bearer',
@@ -60,7 +61,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
-            'user' => $user,
+            'data' => $user,
             'authorisation' => [
                 'token' => $token,
                 'type' => 'bearer',
@@ -81,7 +82,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'status' => 'success',
-            'user' => Auth::user(),
+            'data' => Auth::user(),
             'authorisation' => [
                 'token' => Auth::refresh(),
                 'type' => 'bearer',

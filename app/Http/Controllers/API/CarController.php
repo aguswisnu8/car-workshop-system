@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Car;
 use Exception;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class CarController extends Controller
 
             return response()->json([
                 'status' => 'success add new car',
-                'car' => $car
+                'data' => $car
             ]);
         } catch (Exception $error) {
             
@@ -59,7 +60,7 @@ class CarController extends Controller
 
             return response()->json([
                 'status' => 'success update car',
-                'car' => $car
+                'data' => $car
             ]);
         } catch (Exception $error) {
             return response()->json([
@@ -79,12 +80,12 @@ class CarController extends Controller
                 if ($car) {
                     return response()->json([
                         'status' => 'success get car',
-                        'car' => $car
+                        'data' => $car
                     ]);
                 }else{
                     return response()->json([
                         'status' => 'car not found',
-                        'car' => []
+                        'data' => []
                     ]);
                 }
             }
@@ -93,7 +94,7 @@ class CarController extends Controller
             $car = Car::with(['user']);
             return response()->json([
                 'status' => 'success get current user',
-                'car' => $car->paginate(10)
+                'data' => $car->paginate(10)
             ]);
         } catch (Exception $error) {
             

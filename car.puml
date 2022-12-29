@@ -1,0 +1,79 @@
+@startuml car
+
+state "Customer registered" as regis
+[*] --> regis : customer login/register account
+
+state "Car registered" as regis2
+regis-->regis2 : register customer's car
+
+state "Car Repair Proposal" as proposal {
+    state "suggested services " as prop1
+    prop1 : - proposal status = pending
+    prop1 : - add services (status = pending)
+    [*]-->prop1: workshop diagnose the car
+    state "approve" as prop_aprove
+    prop_aprove : proposal status = progress
+    state "reject" as prop_reject
+
+    state fork_prop <<fork>>
+    prop1 --> fork_prop : verify proposal
+    fork_prop --> prop_aprove
+    fork_prop --> prop_reject
+    prop_reject --> prop1 : remake suggested services
+}
+
+regis2 -->proposal: admin make proposal
+
+state "Car On Repair" as ongoing {
+    state "mechanic receive the services job" as mechanic
+    [*] --> mechanic : admin assign mechanic
+
+    state "Car on progress" as progress
+    progress : service status = progress
+    mechanic --> progress : mechanic do the service
+
+    state "car repair done" as done
+    done : service status = done
+    progress --> done : mechanic finish the service
+
+}
+
+proposal --> ongoing: workshop strat working
+
+
+
+state "car repair done" as finish
+finish : proposal status = feedback
+state fork_complaint <<fork>>
+state "Customer come to workshop" as customer
+
+ongoing --> finish : admin verify proposal status
+finish --> customer : worksho inform cutomer
+customer --> fork_complaint : customer giving feedback
+state "Complaint" as complaint
+state "customer get their car" as satisfied
+satisfied : proposal status = done
+
+fork_complaint --> complaint : unsatisfied
+fork_complaint --> satisfied : satisfied
+
+state "new Proposal" as complaint_prop
+complaint_prop : new service with status = pending
+
+complaint --> complaint_prop : workshop add new services
+complaint_prop --> ongoing : working on complaint
+
+state "Customer recieve invoice" as invoice
+
+satisfied --> invoice : workshop sending invoice
+
+invoice --> [*]
+
+
+
+
+
+
+
+@enduml
+

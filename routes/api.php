@@ -1,11 +1,10 @@
 <?php
 
-
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CarController;
-use App\Http\Controllers\ProposalController;
-use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CarController;
+use App\Http\Controllers\API\ProposalController;
+use App\Http\Controllers\API\ServiceController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

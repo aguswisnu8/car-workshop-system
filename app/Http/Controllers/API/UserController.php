@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class UserController extends Controller
             $user = Auth::user();
             return response()->json([
                 'status' => 'success get current user',
-                'user' => $user
+                'data' => $user
             ]);
         } catch (Exception $error) {
             
@@ -44,12 +45,12 @@ class UserController extends Controller
                 if ($user->first()) {
                     return response()->json([
                         'status' => "success get all $role",
-                        'user' => $user
+                        'data' => $user
                     ]);
                 }else{
                     return response()->json([
                         'status' => "$role didnt exist",
-                        'user' => []
+                        'data' => []
                     ]);
                 }
             }
@@ -57,7 +58,7 @@ class UserController extends Controller
             $user = User::all();
             return response()->json([
                 'status' => 'success get all user',
-                'user' => $user
+                'data' => $user
             ]);
         } catch (Exception $error) {
             
@@ -82,7 +83,7 @@ class UserController extends Controller
             $user->update();
             return response()->json([
                 'status' => 'success changing user role',
-                'user' => $user
+                'data' => $user
             ]);
         } catch (Exception $error) {
             return response()->json([

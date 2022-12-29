@@ -13,13 +13,19 @@ class Proposal extends Model
         'total_price',
         'repair_status',
         'car_in',
-        'car_id'
+        'car_id',
+        'user_id'
     ];
 
     public function car()
     {
-        // one car to many proposal
+        // one car has many proposal
         return $this->belongsTo(Car::class, 'car_id', 'id');
+    }
+    public function user()
+    {
+        // one user has many car
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
     public function services()
     {

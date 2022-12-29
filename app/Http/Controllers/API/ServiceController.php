@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Service;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,12 +25,12 @@ class ServiceController extends Controller
                 if ($service) {
                     return response()->json([
                         'status' => 'success get service',
-                        'service' => $service
+                        'data' => $service
                     ]);
                 }else{
                     return response()->json([
                         'status' => 'service not found',
-                        'service' => []
+                        'data' => []
                     ]);
                 }
             }
@@ -38,7 +39,7 @@ class ServiceController extends Controller
 
             return response()->json([
                 'status' => 'success get service',
-                'service' => $service->paginate(10)
+                'data' => $service->paginate(10)
             ]);
         } catch (Exception $error) {
             
@@ -73,7 +74,7 @@ class ServiceController extends Controller
 
             return response()->json([
                 'status' => 'success get service',
-                'service' => $service
+                'data' => $service
             ]);
         } catch (Exception $error) {
             
@@ -103,7 +104,7 @@ class ServiceController extends Controller
 
             return response()->json([
                 'status' => 'success get service',
-                'service' => $service
+                'data' => $service
             ]);
         } catch (Exception $error) {
             

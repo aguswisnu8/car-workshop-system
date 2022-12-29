@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Proposal;
 use Carbon\Carbon;
 use Exception;
@@ -25,21 +26,21 @@ class ProposalController extends Controller
                 if ($proposal) {
                     return response()->json([
                         'status' => 'success get proposal',
-                        'proposal' => $proposal
+                        'data' => $proposal
                     ]);
                 }else{
                     return response()->json([
                         'status' => 'proposal not found',
-                        'proposal' => []
+                        'data' => []
                     ]);
                 }
             }
             // get all proposal with car information, car owner, services, and mechanic
-            $proposal = Proposal::with(['car.user','services']);
+            $proposal = Proposal::with(['car','user','services']);
 
             return response()->json([
                 'status' => 'success get proposal',
-                'proposal' => $proposal->paginate(10)
+                'data' => $proposal->paginate(10)
             ]);
         } catch (Exception $error) {
             
@@ -58,16 +59,18 @@ class ProposalController extends Controller
                 'total_price' => ['required', 'integer'],
                 'status'=>['nullable','in:pending,progress,feedback,done'],
                 'car_id' => ['required','integer'],
+                'user_id' => ['required','integer'],
             ]);
             $proposal = Proposal::create([
                 'total_price' => $request->total_price,
                 'car_in' => Carbon::now(),
                 'status' => $request->status,
                 'car_id' => $request->car_id,
+                'user_id' => $request->user_id,
             ]);
             return response()->json([
                 'status' => 'success add new proposal',
-                'proposal' => $proposal
+                'data' => $proposal
             ]);
         } catch (Exception $error) {
             
@@ -94,7 +97,7 @@ class ProposalController extends Controller
 
             return response()->json([
                 'status' => 'success update proposal',
-                'proposal' => $proposal
+                'data' => $proposal
             ]);
         } catch (Exception $error) {
             
