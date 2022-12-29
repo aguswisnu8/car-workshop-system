@@ -49,11 +49,12 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        $user = User::where('email', $request->email)->first();
 
         $token = Auth::login($user);
         return response()->json([

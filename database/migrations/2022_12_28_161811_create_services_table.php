@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('status',['pending','progress','done'])->default('pending');
             $table->longText('description')->nullable();
             $table->bigInteger('proposal_id');
-            $table->bigInteger('mechanic_id');
+            $table->bigInteger('mechanic_id')->default(0);
             
 
             $table->timestamps();

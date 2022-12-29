@@ -1,6 +1,11 @@
 <?php
 
+
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +27,30 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 
 });
+
+
+Route::controller(UserController::class)->group( function (){
+    Route::get('me','me');
+    Route::get('users','getAllUsers');
+    Route::post('role/{id}','changeRole');
+});
+
+Route::controller(CarController::class)->group( function (){
+    Route::get('cars','all');
+    Route::post('car','store');
+    Route::post('car/{id}','update');
+});
+
+Route::controller(ProposalController::class)->group( function (){
+    Route::get('proposals','all');
+    Route::post('proposal','store');
+    Route::post('proposal/{id}','update');
+});
+Route::controller(ServiceController::class)->group( function (){
+    Route::get('services','all');
+    Route::post('service','store');
+    Route::post('service/{id}','update');
+});
+
+
+
