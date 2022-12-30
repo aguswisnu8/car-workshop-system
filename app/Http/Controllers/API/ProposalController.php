@@ -22,7 +22,7 @@ class ProposalController extends Controller
             // get spesific proposal by parameter id
             $id = $request->input('id');
             if ($id) {
-                $proposal = Proposal::with(['user'])->find($id);
+                $proposal = Proposal::with(['user','car'])->find($id);
                 if ($proposal) {
                     return response()->json([
                         'status' => 'success get proposal',

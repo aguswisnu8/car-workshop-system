@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [HomeController::class, 'home']);
+
+Route::controller(AuthController::class)->group(function(){
+    Route::get('/login','login');
+    Route::post('/login','doLogin');
+
+
+    Route::get('/register','register');
+    Route::post('/register','doRegister');
 });
