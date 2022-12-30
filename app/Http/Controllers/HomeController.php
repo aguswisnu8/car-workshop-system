@@ -11,8 +11,11 @@ class HomeController extends Controller
     public function home(Request $request)
     {
         
-        //code...
-        return session('user');
+        $user = $request->session()->get('user');
+        return response()->view('home.home',[
+            'title' => 'Car Workshop',
+            'user' => $user
+        ]);
         
     }
 }

@@ -69,4 +69,10 @@ class AuthController extends Controller
         ]);
         
     }
+
+    public function doLogout(Request $request)
+    {
+        $request->session()->forget('user');
+        return redirect('/login');
+    }
 }
