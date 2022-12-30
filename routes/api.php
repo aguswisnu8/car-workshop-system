@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('test', function(){
     return 'sukses';
 });
+Route::get('tres', [ServiceController::class, 'tres']);
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/', [HomeController::class, 'home']);
+Route::get('/mail', [MailController::class, 'sendMail']);
 
 Route::controller(AuthController::class)->group(function(){
     Route::get('/login','login');

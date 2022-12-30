@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CustomerNotif;
+use App\Mail\Invoice;
 use App\Models\Proposal;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ProposalController extends Controller
 {
@@ -92,8 +95,32 @@ class ProposalController extends Controller
                 'repair_status' => ['required','in:pending,progress,feedback,done'],
             ]);
             $data = $request->all();
-            $proposal = Proposal::find($id);
+            $proposal = Proposal::with(['user','car'])->find($id);
             $proposal->update($data);
+
+            // when admin change status to feeedback, app will send email to customer
+            // so they can review and giving feedback about repair result
+            if ($proposal->repair_status == 'feedback') {
+                Mail::to($proposal->user->email)->send(new CustomerNotif(
+                    'Repair complete',
+                    $proposal->car->name,
+                    $proposal->car->license_plate,
+                    $proposal->user->name
+                ));
+            }
+
+            // when repair status = done which mean the customer satistified with the result
+            // workshop will send invoice email
+            if ($proposal->repair_status == 'done') {
+                Mail::to($proposal->user->email)->send(new Invoice(
+                    'Car Repair Invoice',
+                    $proposal->car->name,
+                    $proposal->car->license_plate,
+                    $proposal->user->name,
+                    $proposal->car_in,
+                    $proposal->total_price
+                ));
+            }
 
             return response()->json([
                 'status' => 'success update proposal',
